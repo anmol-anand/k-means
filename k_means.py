@@ -46,12 +46,16 @@ def lloyds_algorithm():
 
 
 def evaluate():
-    error_metric = 0.0
+    l1_deviation = 0.0
+    l2_deviation = 0.0
     for sample_id in range(0, NUM_SAMPLES):
         cluster_id = computed_clustering[sample_id]
-        error_metric += euclidean_distance(samples[sample_id],
+        l1_deviation += euclidean_distance(samples[sample_id],
                                            computed_centroids[cluster_id])
-    print("L1 Norm: ", error_metric)
+        l2_deviation += euclidean_distance(samples[sample_id],
+                                           computed_centroids[cluster_id]) ** 2
+    print("L1 Deviation: ", l1_deviation)
+    print("L2 Deviation: ", l2_deviation)
 
 
 def main():
