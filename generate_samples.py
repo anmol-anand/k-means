@@ -26,8 +26,6 @@ def generate_samples():
                                 dtype=np.float64)
     for cluster_id in range(0, NUM_CLUSTERS):
         pseudo_centroids[cluster_id] = generate_centroid(pseudo_centroids, num_clusters=cluster_id)
-    print("*********** Pseudo centroids ***********")
-    print(pseudo_centroids)
     samples = np.empty((NUM_SAMPLES, NUM_DIMENSIONS), dtype=np.float64)
     expected_clustering = np.empty(NUM_SAMPLES, dtype=int)
     for sample_id in range(0, NUM_SAMPLES):

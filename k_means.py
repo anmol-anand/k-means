@@ -3,8 +3,6 @@ from init_centroids import *
 
 samples, expected_clustering = generate_samples()
 
-print(expected_clustering[0:50])
-
 # [0, NUM_SAMPLES) -> [0, NUM_CLUSTERS)
 computed_clustering = np.empty(NUM_SAMPLES, dtype=int)
 computed_centroids = np.empty((NUM_CLUSTERS, NUM_DIMENSIONS), dtype=np.float64)
@@ -40,18 +38,10 @@ def update_centroids():
 def lloyds_algorithm():
     global computed_centroids
     computed_centroids = init_centroids(samples)
-    print("*********** Initial centroids ***********")
-    print(computed_centroids)
     clustering()
-    print(computed_clustering[0:30])
     for _ in range(0, 50):
         update_centroids()
-        print("*********** Updated centroids ***********")
-        print(computed_centroids)
         clustering()
-        print(computed_clustering[0:30])
-    print(expected_clustering[0:40])
-    print(computed_clustering[0:40])
     evaluate()
 
 
