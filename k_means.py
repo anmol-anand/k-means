@@ -56,6 +56,7 @@ def evaluate():
                                            computed_centroids[cluster_id]) ** 2
     print("L1 Deviation: ", l1_deviation)
     print("L2 Deviation: ", l2_deviation)
+    assert l1_deviation ** 2 >= l2_deviation
 
 
 def main():
