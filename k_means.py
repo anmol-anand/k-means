@@ -81,7 +81,7 @@ def main():
                                                markov_chain_length=None)
     x_coordinates = []
     metropolis_hastings_metrics = []
-    for m in range(5, 50, 5):
+    for m in range(5, 100, 5):
         x_coordinates.append(m)
         metropolis_hastings_metrics.append(
             lloyds_algorithm_multiple_runs(init_method=METROPOLIS_HASTINGS,
