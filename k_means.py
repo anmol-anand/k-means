@@ -48,7 +48,7 @@ def lloyds_algorithm(init_method, markov_chain_length):
     return evaluation()
 
 
-def lloyds_algorithm_averaged(init_method, markov_chain_length):
+def lloyds_algorithm_multiple_runs(init_method, markov_chain_length):
     NUM_RUNS = 10
     repeated_run_metrics = np.empty(NUM_RUNS, dtype=np.float64)
     for run in range(0, NUM_RUNS):
@@ -76,13 +76,13 @@ def main():
     global samples
     global expected_clustering
     samples, expected_clustering = generate_samples()
-    d2_metric = lloyds_algorithm_averaged(init_method=D2_SAMPLING,
-                                          markov_chain_length=None)
+    d2_metric = lloyds_algorithm_multiple_runs(init_method=D2_SAMPLING,
+                                               markov_chain_length=None)
     metropolis_hastings_metrics = []
     for m in range(5, 50, 5):
         metropolis_hastings_metrics.append(
-            lloyds_algorithm_averaged(init_method=METROPOLIS_HASTINGS,
-                                      markov_chain_length=m))
+            lloyds_algorithm_multiple_runs(init_method=METROPOLIS_HASTINGS,
+                                           markov_chain_length=m))
 
 
 if __name__ == "__main__":
