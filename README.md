@@ -12,15 +12,21 @@ The Lloyd's algorithm is run using two different initialization methods: D2 samp
 
 The results reveal that the D2 Sampling approach consistently outperforms Metropolis Hastings in terms of accuracy. Performance is measured on the y-axis, which represents the sum of squared distances of samples from their respective cluster centroids. Smaller values on the y-axis indicate better performance.
 
-### Experiment 1: K=10
+<p align="center">
+  <img src="result%20plots/K_10.png" alt="Figure 1: K=10">
+  <br>
+  Experiment 1: K=10
+</p>
 
-![Figure 1: K=10](result%20plots/K_10.png)
+<p align="center">
+  <img src="result%20plots/K_100.png" alt="Figure 1: K=100">
+  <br>
+  Experiment 2: K=100
+</p>
 
-### Experiment 2: K=100
-
-![Figure 1: K=10](result%20plots/K_100.png)
-
-### Experiment 1: K=500
-
-![Figure 1: K=500](result%20plots/K_500.png)
+<p align="center">
+  <img src="result%20plots/K_500.png" alt="Figure 1: K=500">
+  <br>
+  Experiment 3: K=500
+</p>
 
