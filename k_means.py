@@ -1,9 +1,11 @@
 from generate_samples import *
 from init_centroids import *
 
-samples, expected_clustering = generate_samples()
+samples = np.empty((NUM_SAMPLES, NUM_DIMENSIONS), dtype=np.float64)
+# expected_clustering: [0, NUM_SAMPLES) -> [0, NUM_CLUSTERS)
+expected_clustering = np.empty(NUM_SAMPLES, dtype=int)
 
-# [0, NUM_SAMPLES) -> [0, NUM_CLUSTERS)
+# computed_clustering: [0, NUM_SAMPLES) -> [0, NUM_CLUSTERS)
 computed_clustering = np.empty(NUM_SAMPLES, dtype=int)
 computed_centroids = np.empty((NUM_CLUSTERS, NUM_DIMENSIONS), dtype=np.float64)
 
@@ -35,17 +37,29 @@ def update_centroids():
             computed_centroids[cluster_id] /= computed_cluster_size[cluster_id]
 
 
-def lloyds_algorithm():
+def lloyds_algorithm(init_method, markov_chain_length):
     global computed_centroids
-    computed_centroids = init_centroids(samples)
+    computed_centroids = init_centroids(samples, method=init_method,
+                                        markov_chain_length=markov_chain_length)
     clustering()
     for _ in range(0, 50):
         update_centroids()
         clustering()
-    evaluate()
+    return evaluation()
 
 
-def evaluate():
+def lloyds_algorithm_averaged(init_method, markov_chain_length):
+    NUM_RUNS = 10
+    repeated_run_metrics = np.empty(NUM_RUNS, dtype=np.float64)
+    for run in range(0, NUM_RUNS):
+        repeated_run_metrics[run] = lloyds_algorithm(init_method,
+                                                     markov_chain_length)
+    average_metric = np.mean(repeated_run_metrics)
+    print(init_method, " - ", markov_chain_length, "\n\t\t\t", average_metric)
+    return average_metric
+
+
+def evaluation():
     l1_deviation = 0.0
     l2_deviation = 0.0
     for sample_id in range(0, NUM_SAMPLES):
@@ -54,13 +68,21 @@ def evaluate():
                                            computed_centroids[cluster_id])
         l2_deviation += euclidean_distance(samples[sample_id],
                                            computed_centroids[cluster_id]) ** 2
-    print("L1 Deviation: ", l1_deviation)
-    print("L2 Deviation: ", l2_deviation)
     assert l1_deviation ** 2 >= l2_deviation
+    return l2_deviation
 
 
 def main():
-    lloyds_algorithm()
+    global samples
+    global expected_clustering
+    samples, expected_clustering = generate_samples()
+    d2_metric = lloyds_algorithm_averaged(init_method=D2_SAMPLING,
+                                          markov_chain_length=None)
+    metropolis_hastings_metrics = []
+    for m in range(5, 50, 5):
+        metropolis_hastings_metrics.append(
+            lloyds_algorithm_averaged(init_method=METROPOLIS_HASTINGS,
+                                      markov_chain_length=m))
 
 
 if __name__ == "__main__":

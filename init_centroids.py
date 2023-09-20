@@ -1,8 +1,6 @@
 import random
 from utils import *
 
-MARKOV_CHAIN_LENGTH = 10
-
 
 def d2_sampling(samples):
     closest_centroid_distance_sq = np.full(NUM_SAMPLES,
@@ -14,14 +12,14 @@ def d2_sampling(samples):
             closest_centroid_distance_sq[sample_id] = min(
                 closest_centroid_distance_sq[sample_id], euclidean_distance(
                     samples[sample_id], centroids[cluster_id - 1]) ** 2)
-            chosen_sample_id = np.random.choice(
-                a=NUM_SAMPLES, p=closest_centroid_distance_sq / np.sum(
-                    closest_centroid_distance_sq))
-            centroids[cluster_id] = samples[chosen_sample_id]
+        chosen_sample_id = np.random.choice(
+            a=NUM_SAMPLES, p=closest_centroid_distance_sq / np.sum(
+                closest_centroid_distance_sq))
+        centroids[cluster_id] = samples[chosen_sample_id]
     return centroids
 
 
-def metropolis_hastings(samples):
+def metropolis_hastings(samples, markov_chain_length):
     centroids = np.empty((NUM_CLUSTERS, NUM_DIMENSIONS), dtype=np.float64)
     centroids[0] = samples[random.randint(0, NUM_SAMPLES - 1)]
     for cluster_id in range(1, NUM_CLUSTERS):
@@ -30,7 +28,7 @@ def metropolis_hastings(samples):
         for k in range(0, cluster_id - 1):
             closest_centroid_dist_x = min(closest_centroid_dist_x,
                                           euclidean_distance(x, centroids[k]))
-        for j in range(1, MARKOV_CHAIN_LENGTH):
+        for j in range(1, markov_chain_length):
             y = samples[random.randint(0, NUM_SAMPLES - 1)]
             closest_centroid_dist_y = np.finfo(np.float64).max
             for k in range(0, cluster_id - 1):
@@ -46,6 +44,9 @@ def metropolis_hastings(samples):
     return centroids
 
 
-def init_centroids(samples):
-    # return d2_sampling(samples)
-    return metropolis_hastings(samples)
+def init_centroids(samples, method, markov_chain_length):
+    if method == D2_SAMPLING:
+        return d2_sampling(samples)
+    if method == METROPOLIS_HASTINGS:
+        return metropolis_hastings(samples, markov_chain_length)
+    assert False
