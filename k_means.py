@@ -1,5 +1,6 @@
 from generate_samples import *
 from init_centroids import *
+import matplotlib.pyplot as plt
 
 samples = np.empty((NUM_SAMPLES, NUM_DIMENSIONS), dtype=np.float64)
 # expected_clustering: [0, NUM_SAMPLES) -> [0, NUM_CLUSTERS)
@@ -49,7 +50,7 @@ def lloyds_algorithm(init_method, markov_chain_length):
 
 
 def lloyds_algorithm_multiple_runs(init_method, markov_chain_length):
-    NUM_RUNS = 10
+    NUM_RUNS = 20
     repeated_run_metrics = np.empty(NUM_RUNS, dtype=np.float64)
     for run in range(0, NUM_RUNS):
         repeated_run_metrics[run] = lloyds_algorithm(init_method,
@@ -78,11 +79,26 @@ def main():
     samples, expected_clustering = generate_samples()
     d2_metric = lloyds_algorithm_multiple_runs(init_method=D2_SAMPLING,
                                                markov_chain_length=None)
+    x_coordinates = []
     metropolis_hastings_metrics = []
-    for m in range(5, 50, 5):
+    for m in range(5, 100, 5):
+        x_coordinates.append(m)
         metropolis_hastings_metrics.append(
             lloyds_algorithm_multiple_runs(init_method=METROPOLIS_HASTINGS,
                                            markov_chain_length=m))
+
+    plt.plot(x_coordinates, [d2_metric] * len(x_coordinates), marker='o',
+             linestyle='-', color='g', label='D2 Sampling')
+    plt.plot(x_coordinates, metropolis_hastings_metrics, marker='o',
+             linestyle='-', color='r', label='Metropolis Hastings')
+
+    plt.title("Analysing Lloyd's algorithm performance for D2 and Metropolis "
+              "Hastings initialization ------ K = " + str(NUM_CLUSTERS))
+    plt.xlabel('Markov Chain Length')
+    plt.ylabel('L2 deviation of samples from cluster centers')
+
+    plt.legend()
+    plt.show()
 
 
 if __name__ == "__main__":
