@@ -2,7 +2,9 @@
 
 ## Overview
 
-This project contains the implementation of Lloyd's k-means algorithm, which is used for clustering data into K distinct clusters.
+This project contains the implementation of Lloyd's k-means algorithm, which is used for clustering data into K distinct clusters. 
+
+[Link to Project Report](https://anmol-anand.github.io/paper/K_Means_Project_Report.pdf)
 
 ## Experiment Details
 
