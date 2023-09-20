@@ -40,6 +40,7 @@ def update_centroids():
 
 
 def lloyds_algorithm():
+    global computed_centroids
     computed_centroids = init_centroids(samples)
     clustering_changed()
     while True:

@@ -1,6 +1,6 @@
 import numpy as np
 
-NUM_SAMPLES = 1e3
+NUM_SAMPLES = 1000
 NUM_CLUSTERS = 10
 NUM_DIMENSIONS = 2
 
