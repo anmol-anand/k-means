@@ -30,3 +30,15 @@ The results reveal that the D2 Sampling approach consistently outperforms Metrop
   Experiment 3: K=500
 </p>
 
+## Running the Code
+
+To run the code, follow these steps:
+
+1. Clone this repository locally
+2. Change directory to the cloned repository
+3. Set the desired value of K by modifying NUM_CLUSTERS variable in utils.py
+4. Run the python script k_means.py
+
+Once the script completes, a plot like the ones above will be generated.
+
+Note: You might have to install the necessary dependencies like NumPy, Matplotlib, etc.
