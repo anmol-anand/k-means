@@ -6,7 +6,7 @@ This project contains the implementation of Lloyd's k-means algorithm, which is 
 
 ## Experiment Details
 
-The Lloyd's algorithm is run using two different initialization methods: D2 sampling initialization (green line plots) and Metropolis Hastings initialization (red line plots) of cluster centroids. The experiment is conducted with three different values of K: 10, 100, and 500. When using Metropolis Hastings initialization, the experiment varies in terms of the lengths of the Markov chain, which is represented on the x-axis of the plots.
+Lloyd's algorithm is run using two different initialization methods of cluster centroids: D2 sampling initialization (green line plots) and Metropolis Hastings initialization (red line plots). The experiment is conducted with three different values of K: 10, 100, and 500. When using Metropolis Hastings initialization, the experiment varies in terms of the lengths of the Markov chain, which is represented on the x-axis of the plots.
 
 ## Results
 
